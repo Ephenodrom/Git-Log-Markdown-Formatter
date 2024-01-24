@@ -12,10 +12,12 @@ class FormatCommand extends Command {
   String issueType = "";
   String? cbu;
   String? ibu;
-  bool addIssueLink = true;
-  bool addCommitLink = true;
+  String addIssueLink = "REPLACE";
+  String addCommitLink = "REPLACE";
   String? header;
   String? footer;
+  String listStyle = "DASH";
+  String listStyleValue = "-";
 
   @override
   String get description =>
@@ -67,12 +69,24 @@ class FormatCommand extends Command {
     );
     argParser.addOption(
       'addIssueLink',
-      defaultsTo: "true",
+      defaultsTo: "REPLACE",
+      allowed: [
+        "NONE",
+        "REPLACE",
+        "PREPEND",
+        "APPEND",
+      ],
       help: "To add a issue link at the end of the subject (%s).",
     );
     argParser.addOption(
       'addCommitLink',
-      defaultsTo: "true",
+      defaultsTo: "REPLACE",
+      allowed: [
+        "NONE",
+        "REPLACE",
+        "PREPEND",
+        "APPEND",
+      ],
       help: "Whether to replace the commit hash as a link to the commit.",
     );
     argParser.addOption(
@@ -84,6 +98,16 @@ class FormatCommand extends Command {
       'footer',
       defaultsTo: null,
       help: "String to append at the end of the markdown.",
+    );
+    argParser.addOption(
+      'listStyle',
+      defaultsTo: "DASH",
+      allowed: [
+        "DASH",
+        "ASTERISK",
+        "NONE",
+      ],
+      help: "The list style to use for each line. '-', '*' or none.",
     );
   }
 
@@ -109,6 +133,7 @@ class FormatCommand extends Command {
   @override
   void run() {
     setUpArgs();
+    validateArgs();
     var lines = readFileContent();
     markdown = formatLines(lines);
     writeFileContent();
@@ -119,6 +144,7 @@ class FormatCommand extends Command {
     sb = StringBuffer();
     if (header != null) {
       sb!.writeln(header);
+      sb!.writeln();
     }
     var lb = StringBuffer();
     for (var l in lines) {
@@ -142,10 +168,27 @@ class FormatCommand extends Command {
         }
         lb.write(" ");
       }
-      sb!.writeln("- ${lb.toString().trim()}");
+
+      switch (listStyle) {
+        case "DASH":
+          sb!.writeln("- ${lb.toString().trim()}");
+          break;
+        case "ASTERISK":
+          sb!.writeln("* ${lb.toString().trim()}");
+          break;
+        case "NONE":
+        default:
+          sb!.writeln(lb.toString().trim());
+      }
       lb.clear();
     }
-    return sb.toString();
+    if (footer == null) {
+      return sb!.toString();
+    } else {
+      sb!.writeln();
+      sb!.writeln(footer);
+      return sb!.toString();
+    }
   }
 
   Map<String, String> getValuesFromLine(String l) {
@@ -164,15 +207,16 @@ class FormatCommand extends Command {
 
   void setUpArgs() {
     template = argResults!['template'] as String;
-    cbu = argResults!['cbu'] as String?;
-    ibu = argResults!['ibu'] as String?;
-    addCommitLink = argResults!['addCommitLink'] == "true";
-    addIssueLink = argResults!['addIssueLink'] == "true";
+    cbu = argResults!['commitBaseUrl'] as String?;
+    ibu = argResults!['issueBaseUrl'] as String?;
+    addCommitLink = argResults!['addCommitLink'];
+    addIssueLink = argResults!['addIssueLink'];
     issueType = argResults!['issueType'];
     header = argResults!['header'];
     footer = argResults!['footer'];
     file = argResults!['inputfile'];
     outputfile = argResults!['outputfile'];
+    listStyle = argResults!['listStyle'];
   }
 
   String? getIssue(String l) {
@@ -210,25 +254,49 @@ class FormatCommand extends Command {
   }
 
   void processModoluS(String? m, StringBuffer lb, String line) {
-    lb.write(m);
-    if (addIssueLink) {
-      var issue = getIssue(line);
-      if (issue != null) {
-        var link = issueType == "JIRA" ? issue : issue.substring(1);
-        lb.write(" ($issue)[$ibu$link]");
-      }
+    var issue = getIssue(line);
+    var link = "";
+    if (issue != null && issue.length > 1) {
+      link = issueType == "JIRA" ? issue : issue.substring(1);
     }
-  }
-
-  void processModoluUpperH(String? m, StringBuffer lb) {
-    if (addCommitLink) {
-      lb.write("(Commit)[$cbu$m]");
+    if (issue != null && addIssueLink == "REPLACE") {
+      lb.write("[$issue]($ibu$link)");
+    } else if (issue != null && addIssueLink == "PREPEND") {
+      lb.write(" [$issue]($ibu$link) $m");
+    } else if (issue != null && addIssueLink == "APPEND") {
+      lb.write("$m [$issue]($ibu$link)");
     } else {
       lb.write(m);
     }
   }
 
+  void processModoluUpperH(String? m, StringBuffer lb) {
+    switch (addCommitLink) {
+      case "REPLACE":
+        lb.write("[Commit]($cbu$m)");
+        break;
+      case "PREPEND":
+        lb.write("[Commit]($cbu$m) $m");
+        break;
+      case "APPEND":
+        lb.write("$m [Commit]($cbu$m)");
+        break;
+      case "NONE":
+      default:
+        lb.write(m);
+    }
+  }
+
   void processModoluAn(String? m, StringBuffer lb) {
     lb.write(m);
+  }
+
+  void validateArgs() {
+    if (addCommitLink != "NONE" && cbu == null) {
+      throw UsageException("Option commitBaseUrl is required.", usage);
+    }
+    if (addIssueLink != "NONE" && ibu == null) {
+      throw UsageException("Option issueBaseUrl is required.", usage);
+    }
   }
 }

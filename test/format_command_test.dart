@@ -1,4 +1,3 @@
-import 'package:args/args.dart';
 import 'package:test/test.dart';
 
 import '../bin/src/format_command.dart';
