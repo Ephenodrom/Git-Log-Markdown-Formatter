@@ -1,0 +1,6 @@
+- Merge branch 'develop' 70426ddbc0eafb0d360de225f5558bca1bb404dc by group_1_bot_abcde
+- Update versions for release cac4d0a7c2ac58c841c249fa8e1fdb4295eee6ed by group_1_bot_abcde
+- Merge branch 'JIRA-2' into 'develop' aa1114f4d27a049ac4e01fa78402eee965a1528a by Ephenodrom
+- Update .gitlab-ci.yml c491eb38b129b85a21e6482c8e7e7a8cdd02e03a by Ephenodrom
+- Update for next development version 7d5cfa5a997bc9b415bb906fc6380a0118f24aed by group_1_bot_abcde
+- Merge tag '1.64.0' into develop 9a3370fc25c4931a7d3d1861de4546ade29a92e9 by group_1_bot_abcde

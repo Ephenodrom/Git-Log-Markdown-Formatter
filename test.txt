@@ -1,0 +1,6 @@
+s=Merge branch 'develop';H=70426ddbc0eafb0d360de225f5558bca1bb404dc;an=group_1_bot_abcde
+s=Update versions for release;H=cac4d0a7c2ac58c841c249fa8e1fdb4295eee6ed;an=group_1_bot_abcde
+s=Merge branch 'JIRA-2' into 'develop';H=aa1114f4d27a049ac4e01fa78402eee965a1528a;an=Ephenodrom
+s=Update .gitlab-ci.yml;H=c491eb38b129b85a21e6482c8e7e7a8cdd02e03a;an=Ephenodrom
+s=Update for next development version;H=7d5cfa5a997bc9b415bb906fc6380a0118f24aed;an=group_1_bot_abcde
+s=Merge tag '1.64.0' into develop;H=9a3370fc25c4931a7d3d1861de4546ade29a92e9;an=group_1_bot_abcde

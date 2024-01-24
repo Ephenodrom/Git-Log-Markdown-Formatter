@@ -6,11 +6,12 @@ class FormatCommand extends Command {
   StringBuffer? sb;
   String? markdown;
 
-  String format = "";
-  String fileName = "";
+  String template = "";
+  String file = "";
+  String? outputfile;
   String issueType = "";
-  String? cbu = "";
-  String? ibu = "";
+  String? cbu;
+  String? ibu;
   bool addIssueLink = true;
   bool addCommitLink = true;
   String? header;
@@ -25,46 +26,64 @@ class FormatCommand extends Command {
 
   FormatCommand() {
     argParser.addOption(
-      'fname',
+      'inputfile',
+      abbr: 'i',
       mandatory: true,
+      help: "The file containing the git log output.",
     );
     argParser.addOption(
-      'format',
-      abbr: 'f',
+      'outputfile',
+      abbr: 'o',
+      help:
+          "The file to write the markdown to. If left, the markdown will override the file containing the git log.",
+    );
+    argParser.addOption(
+      'template',
+      abbr: 't',
       defaultsTo: "%s %H by %an",
-      help: "foooo",
+      help:
+          "The template to use for each line. Supported placeholders are: %s, %H, %an.",
     );
     argParser.addOption(
       'issueType',
-      abbr: 'i',
       defaultsTo: "JIRA",
       allowed: [
         "JIRA",
         "GITHUB",
         "GITLAB",
       ],
+      help: "The issue management software you use.",
     );
     argParser.addOption(
-      'ibu',
+      'issueBaseUrl',
+      defaultsTo: null,
+      help: "The base url to display the issue. Required if addIssueLink=true.",
     );
     argParser.addOption(
-      'cbu',
+      'commitBaseUrl',
+      defaultsTo: null,
+      help:
+          "The base url to display the commit. Required if addCommitLink=true.",
     );
     argParser.addOption(
       'addIssueLink',
       defaultsTo: "true",
+      help: "To add a issue link at the end of the subject (%s).",
     );
     argParser.addOption(
       'addCommitLink',
       defaultsTo: "true",
+      help: "Whether to replace the commit hash as a link to the commit.",
     );
     argParser.addOption(
       'header',
       defaultsTo: null,
+      help: "String to append at the beginning of the markdown.",
     );
     argParser.addOption(
       'footer',
       defaultsTo: null,
+      help: "String to append at the end of the markdown.",
     );
   }
 
@@ -95,12 +114,12 @@ class FormatCommand extends Command {
     writeFileContent();
   }
 
-  String formatLines(
-    List<String> lines, {
-    bool addCommitLink = true,
-  }) {
-    var splittedFormat = format.split(" ");
+  String formatLines(List<String> lines) {
+    var splittedFormat = template.split(" ");
     sb = StringBuffer();
+    if (header != null) {
+      sb!.writeln(header);
+    }
     var lb = StringBuffer();
     for (var l in lines) {
       if (l.isEmpty) {
@@ -110,26 +129,13 @@ class FormatCommand extends Command {
       for (var s in splittedFormat) {
         switch (s) {
           case "%s":
-            var subject = m["s"];
-            lb.write(subject);
-            if (addIssueLink) {
-              var issue = getIssue(l);
-              if (issue != null) {
-                var link = issueType == "JIRA" ? issue : issue.substring(1);
-                lb.write(" ($issue)[$ibu$link]");
-              }
-            }
+            processModoluS(m["s"], lb, l);
             break;
           case "%H":
-            var hash = m["H"];
-            if (addCommitLink) {
-              lb.write("(Commit)[$cbu$hash]");
-            } else {
-              lb.write(hash);
-            }
+            processModoluUpperH(m["H"], lb);
             break;
           case "%an":
-            lb.write(m["an"]);
+            processModoluAn(m["an"], lb);
             break;
           default:
             lb.write(s);
@@ -140,10 +146,6 @@ class FormatCommand extends Command {
       lb.clear();
     }
     return sb.toString();
-  }
-
-  List<String> readFileContent() {
-    return File(fileName).readAsLinesSync();
   }
 
   Map<String, String> getValuesFromLine(String l) {
@@ -161,22 +163,23 @@ class FormatCommand extends Command {
   }
 
   void setUpArgs() {
-    format = argResults!['format'] as String;
-    cbu = argResults!['cbu'] as String;
-    ibu = argResults!['ibu'] as String;
+    template = argResults!['template'] as String;
+    cbu = argResults!['cbu'] as String?;
+    ibu = argResults!['ibu'] as String?;
     addCommitLink = argResults!['addCommitLink'] == "true";
     addIssueLink = argResults!['addIssueLink'] == "true";
     issueType = argResults!['issueType'];
     header = argResults!['header'];
     footer = argResults!['footer'];
-    fileName = argResults!['fileName'];
+    file = argResults!['inputfile'];
+    outputfile = argResults!['outputfile'];
   }
 
   String? getIssue(String l) {
     RegExp regex;
     switch (issueType) {
       case "JIRA":
-        regex = RegExp("r'((?<!([A-Za-z]{1,10})-?)[A-Z]+-\d+)");
+        regex = RegExp(r'((?<!([A-Za-z]{1,10})-?)[A-Z]+-\d+)');
         break;
       default:
         regex = RegExp(r'(#\d+)');
@@ -194,7 +197,38 @@ class FormatCommand extends Command {
     return issue;
   }
 
+  List<String> readFileContent() {
+    return File(file).readAsLinesSync();
+  }
+
   void writeFileContent() {
-    File(fileName).writeAsString(markdown!);
+    if (outputfile != null) {
+      File(outputfile!).writeAsString(markdown!);
+    } else {
+      File(file).writeAsString(markdown!);
+    }
+  }
+
+  void processModoluS(String? m, StringBuffer lb, String line) {
+    lb.write(m);
+    if (addIssueLink) {
+      var issue = getIssue(line);
+      if (issue != null) {
+        var link = issueType == "JIRA" ? issue : issue.substring(1);
+        lb.write(" ($issue)[$ibu$link]");
+      }
+    }
+  }
+
+  void processModoluUpperH(String? m, StringBuffer lb) {
+    if (addCommitLink) {
+      lb.write("(Commit)[$cbu$m]");
+    } else {
+      lb.write(m);
+    }
+  }
+
+  void processModoluAn(String? m, StringBuffer lb) {
+    lb.write(m);
   }
 }
