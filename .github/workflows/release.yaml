@@ -1,0 +1,46 @@
+name: Release Workflow
+
+on:
+  workflow_run:
+    workflows:
+      - "Release Workflow"
+    types:
+      - workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v2
+
+    - name: Get Version from pubspec.yaml
+      run: echo "::set-env name=PACKAGE_VERSION::$(dart get_version.dart)"
+    
+    - name: Build Executable
+      run: dart compile exe bin/git_log_markdown_formatter.dart -o glmf
+
+    - name: Upload Executable Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: glmf
+        path: glmf
+
+    - name: Create Release
+      uses: actions/setup-gh@v0.7.0
+      with:
+        gh-version: 2.2.0
+
+    - name: Publish Release
+      run: |
+        gh release create v${{ env.PACKAGE_VERSION }} \
+          dist/my-binary.zip \
+          -t "Release v${{ env.PACKAGE_VERSION }}" \
+          -n "$(cat RELEASE_NOTES.md)"
+
+    - name: Create Git Tag
+      run: git tag v${{ env.PACKAGE_VERSION }} && git push origin v${{ env.PACKAGE_VERSION }}
