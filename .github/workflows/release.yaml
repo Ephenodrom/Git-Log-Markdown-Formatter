@@ -1,11 +1,9 @@
 name: Release Workflow
 
 on:
-  workflow_run:
-    workflows:
-      - "Release Workflow"
+  release:
     types:
-      - workflow_dispatch
+      - created
 
 jobs:
   release:

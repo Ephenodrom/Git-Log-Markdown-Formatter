@@ -1,0 +1,19 @@
+name: Trigger Release Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      workflow:  # Reference to the release workflow
+        description: 'Release Workflow'
+        required: true
+        default: 'release.yml'
+
+jobs:
+  trigger-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Release Workflow
+      uses: actions/workflow-dispatch@v2
+      with:
+        workflow: ${{ github.event.inputs.workflow }}
