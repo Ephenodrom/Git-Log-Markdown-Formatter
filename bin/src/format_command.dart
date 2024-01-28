@@ -7,7 +7,7 @@ class FormatCommand extends Command {
   String? markdown;
 
   String template = "";
-  String file = "";
+  String? file = "";
   String? outputfile;
   String issueType = "";
   String? cbu;
@@ -16,8 +16,8 @@ class FormatCommand extends Command {
   String addCommitLink = "REPLACE";
   String? header;
   String? footer;
-  String listStyle = "DASH";
-  String listStyleValue = "-";
+  String? from;
+  String? to;
 
   @override
   String get description =>
@@ -30,8 +30,8 @@ class FormatCommand extends Command {
     argParser.addOption(
       'inputfile',
       abbr: 'i',
-      mandatory: true,
       help: "The file containing the git log output.",
+      hide: true,
     );
     argParser.addOption(
       'outputfile',
@@ -42,7 +42,7 @@ class FormatCommand extends Command {
     argParser.addOption(
       'template',
       abbr: 't',
-      defaultsTo: "%s %H by %an",
+      defaultsTo: "- %s %H by %an",
       help:
           "The template to use for each line. Supported placeholders are: %s, %H, %an.",
     );
@@ -64,6 +64,7 @@ class FormatCommand extends Command {
     argParser.addOption(
       'commitBaseUrl',
       defaultsTo: null,
+      mandatory: false,
       help:
           "The base url to display the commit. Required if addCommitLink=true.",
     );
@@ -100,14 +101,14 @@ class FormatCommand extends Command {
       help: "String to append at the end of the markdown.",
     );
     argParser.addOption(
-      'listStyle',
-      defaultsTo: "DASH",
-      allowed: [
-        "DASH",
-        "ASTERISK",
-        "NONE",
-      ],
-      help: "The list style to use for each line. '-', '*' or none.",
+      'from',
+      defaultsTo: null,
+      help: "The tag to start from",
+    );
+    argParser.addOption(
+      'to',
+      defaultsTo: null,
+      help: "The tag until to include commits",
     );
   }
 
@@ -131,10 +132,11 @@ class FormatCommand extends Command {
 */
 
   @override
-  void run() {
+  void run() async {
     setUpArgs();
     validateArgs();
-    var lines = readFileContent();
+    var lines = await readFileContent();
+
     markdown = formatLines(lines);
     writeFileContent();
   }
@@ -169,17 +171,7 @@ class FormatCommand extends Command {
         lb.write(" ");
       }
 
-      switch (listStyle) {
-        case "DASH":
-          sb!.writeln("- ${lb.toString().trim()}");
-          break;
-        case "ASTERISK":
-          sb!.writeln("* ${lb.toString().trim()}");
-          break;
-        case "NONE":
-        default:
-          sb!.writeln(lb.toString().trim());
-      }
+      sb!.writeln(lb.toString().trim());
       lb.clear();
     }
     if (footer == null) {
@@ -216,7 +208,6 @@ class FormatCommand extends Command {
     footer = argResults!['footer'];
     file = argResults!['inputfile'];
     outputfile = argResults!['outputfile'];
-    listStyle = argResults!['listStyle'];
   }
 
   String? getIssue(String l) {
@@ -241,15 +232,38 @@ class FormatCommand extends Command {
     return issue;
   }
 
-  List<String> readFileContent() {
-    return File(file).readAsLinesSync();
+  Future<List<String>> readFileContent() async {
+    if (file != null) {
+      return File(file!).readAsLinesSync();
+    }
+    var parameters = <String>[];
+    parameters.add("log");
+    if (from != null && to != null) {
+      parameters.add("$from..$to");
+    } else if (from != null && to == null) {
+      parameters.add("$from..");
+    } else if (from == null && to != null) {
+      parameters.add("..$to");
+    }
+    parameters.add(
+        '--format=H=%H;h=%h;T=%T;t=%t;P=%P;p=%p;an=%an;ae=%ae;ad=%ad;ar=%ar;cn=%cn;ce=%ce;cd=%cd;cr=%cr;s=%s;b=%b"');
+    ProcessResult result = await Process.run(
+      'git',
+      parameters,
+    );
+    if (result.exitCode == 0) {
+      var log = result.stdout as String;
+      return log.split("\n");
+    } else {
+      throw UsageException("Could not generate git log", usage);
+    }
   }
 
   void writeFileContent() {
     if (outputfile != null) {
       File(outputfile!).writeAsString(markdown!);
     } else {
-      File(file).writeAsString(markdown!);
+      print(markdown!);
     }
   }
 

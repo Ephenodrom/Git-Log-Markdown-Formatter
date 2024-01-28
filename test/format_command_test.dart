@@ -61,7 +61,7 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
     var cmd = FormatCommand();
     cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
     cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
-    cmd.template = "%s %H by %an";
+    cmd.template = "- %s %H by %an";
     cmd.addIssueLink = "APPEND";
     var markdown = cmd.formatLines(log1.split("\n"));
     expect(markdown, expected1);
@@ -74,7 +74,7 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
     cmd.ibu = "https://jira.com/browse/";
     cmd.issueType = "JIRA";
     cmd.addIssueLink = "APPEND";
-    cmd.template = "%s %H by %an";
+    cmd.template = "- %s %H by %an";
     cmd.header = "# Release test_maven (1.0.0)";
     var markdown = cmd.formatLines(log2.split("\n"));
     expect(markdown, expected2);
@@ -84,7 +84,7 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
     var cmd = FormatCommand();
     cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
     cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
-    cmd.template = "%s %H by %an";
+    cmd.template = "- %s %H by %an";
     var markdown = cmd.formatLines(log3.split("\n"));
     expect(markdown, expected3);
   });
