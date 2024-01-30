@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 
+import 'exception/git_exception.dart';
+
 class FormatCommand extends Command {
   StringBuffer? sb;
   String? markdown;
@@ -147,7 +149,6 @@ class FormatCommand extends Command {
       sb!.writeln(header);
       sb!.writeln();
     }
-    var lb = StringBuffer();
     for (var l in lines) {
       if (l.isEmpty) {
         continue;
@@ -161,7 +162,7 @@ class FormatCommand extends Command {
             formattedLine = processModoluS(m["s"], formattedLine, l);
             break;
           case "H":
-            formattedLine = processModoluUpperH(m["H"], formattedLine);
+            formattedLine = processModoluH(m["H"], formattedLine);
             break;
           case "an":
             formattedLine = formattedLine.replaceAll("%an", m["an"] ?? "NULL");
@@ -169,12 +170,46 @@ class FormatCommand extends Command {
           case "ae":
             formattedLine = formattedLine.replaceAll("%ae", m["ae"] ?? "NULL");
             break;
+          case "h":
+            formattedLine = processModoluH(m["h"], formattedLine, value: "%h");
+            break;
+          case "T":
+            formattedLine = formattedLine.replaceAll("%T", m["T"] ?? "NULL");
+            break;
+          case "t":
+            formattedLine = formattedLine.replaceAll("%t", m["t"] ?? "NULL");
+            break;
+          case "P":
+            formattedLine = formattedLine.replaceAll("%P", m["P"] ?? "NULL");
+            break;
+          case "p":
+            formattedLine = formattedLine.replaceAll("%p", m["p"] ?? "NULL");
+            break;
+          case "ad":
+            formattedLine = formattedLine.replaceAll("%ad", m["ad"] ?? "NULL");
+            break;
+          case "ar":
+            formattedLine = formattedLine.replaceAll("%ar", m["ar"] ?? "NULL");
+            break;
+          case "cn":
+            formattedLine = formattedLine.replaceAll("%cn", m["cn"] ?? "NULL");
+            break;
+          case "ce":
+            formattedLine = formattedLine.replaceAll("%ce", m["ce"] ?? "NULL");
+            break;
+          case "cd":
+            formattedLine = formattedLine.replaceAll("%cd", m["cd"] ?? "NULL");
+            break;
+          case "cr":
+            formattedLine = formattedLine.replaceAll("%cr", m["cr"] ?? "NULL");
+            break;
+          case "b":
+            formattedLine = formattedLine.replaceAll("%b", m["b"] ?? "NULL");
+            break;
         }
       }
-      //lb.write(formattedLine);
 
       sb!.writeln(formattedLine);
-      lb.clear();
     }
     if (footer == null) {
       return sb!.toString();
@@ -257,7 +292,8 @@ class FormatCommand extends Command {
       var log = result.stdout as String;
       return log.split("\n");
     } else {
-      throw UsageException("Could not generate git log", usage);
+      var msg = result.stderr as String;
+      throw GitException(msg, "git log");
     }
   }
 
@@ -291,20 +327,21 @@ class FormatCommand extends Command {
     return formattedLine;
   }
 
-  String processModoluUpperH(String? m, String formattedLine) {
+  String processModoluH(String? m, String formattedLine,
+      {String value = "%H"}) {
     switch (addCommitLink) {
       case "REPLACE":
-        formattedLine = formattedLine.replaceAll("%H", "[Commit]($cbu$m)");
+        formattedLine = formattedLine.replaceAll(value, "[Commit]($cbu$m)");
         break;
       case "PREPEND":
-        formattedLine = formattedLine.replaceAll("%H", "[Commit]($cbu$m) $m");
+        formattedLine = formattedLine.replaceAll(value, "[Commit]($cbu$m) $m");
         break;
       case "APPEND":
-        formattedLine = formattedLine.replaceAll("%H", "$m [Commit]($cbu$m)");
+        formattedLine = formattedLine.replaceAll(value, "$m [Commit]($cbu$m)");
         break;
       case "NONE":
       default:
-        formattedLine = formattedLine.replaceAll("%H", m ?? "NULL");
+        formattedLine = formattedLine.replaceAll(value, m ?? "NULL");
     }
     return formattedLine;
   }

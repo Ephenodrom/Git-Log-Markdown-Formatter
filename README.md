@@ -34,11 +34,11 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
 
 ### The template
 
-You can define a custom template to order the values in a certain order or to create a readable markdown. The default template is set to **"%s %H by %an"** and results in something similar to this:
+You can define a custom template to order the values in a certain order or to create a readable markdown. The default template is set to **"- %s %H by %an"** and with all other default settings, this will result in something similar to this:
 
 ```txt
-- [JIRA-2](https://jira.com/JIRA-2) aa1114f4d27a049ac4e01fa78402eee965a1528a by Ephenodrom
-- Update README.md c491eb38b129b85a21e6482c8e7e7a8cdd02e03a by Ephenodrom
+- [JIRA-2](https://jira.com/JIRA-2) [aa1114f4d27a049ac4e01fa78402eee965a1528a](https://github.com/Foo/Bar/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a) by Ephenodrom
+- Update README.md [c491eb38b129b85a21e6482c8e7e7a8cdd02e03a](https://github.com/Foo/Bar/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a) by Ephenodrom
 ```
 
 The allowed values:
