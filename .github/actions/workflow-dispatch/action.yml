@@ -7,5 +7,6 @@ inputs:
     required: true
 runs:
   using: 'composite'
+  shell: bash
   steps:
     - run: echo "Triggering workflow ${{ inputs.workflow }}"
