@@ -13,7 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Trigger Release Workflow
-      uses: actions/workflow-dispatch@v2
+      uses: ./.github/actions/workflow-dispatch
       with:
         workflow: ${{ github.event.inputs.workflow }}
+        ref: main
