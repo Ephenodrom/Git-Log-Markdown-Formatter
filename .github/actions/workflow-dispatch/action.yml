@@ -1,0 +1,11 @@
+name: 'Workflow Dispatch'
+description: 'Trigger another workflow'
+author: 'Ephenodrom'
+inputs:
+  workflow:
+    description: 'release'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - run: echo "Triggering workflow ${{ inputs.workflow }}"
