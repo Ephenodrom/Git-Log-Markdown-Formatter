@@ -142,7 +142,6 @@ class FormatCommand extends Command {
   }
 
   String formatLines(List<String> lines) {
-    var splittedFormat = template.split(" ");
     sb = StringBuffer();
     if (header != null) {
       sb!.writeln(header);
@@ -153,25 +152,28 @@ class FormatCommand extends Command {
       if (l.isEmpty) {
         continue;
       }
-      var m = getValuesFromLine(l);
-      for (var s in splittedFormat) {
-        switch (s) {
-          case "%s":
-            processModoluS(m["s"], lb, l);
-            break;
-          case "%H":
-            processModoluUpperH(m["H"], lb);
-            break;
-          case "%an":
-            processModoluAn(m["an"], lb);
-            break;
-          default:
-            lb.write(s);
-        }
-        lb.write(" ");
-      }
+      var formattedLine = template.toString();
 
-      sb!.writeln(lb.toString().trim());
+      var m = getValuesFromLine(l);
+      for (var s in m.keys) {
+        switch (s) {
+          case "s":
+            formattedLine = processModoluS(m["s"], formattedLine, l);
+            break;
+          case "H":
+            formattedLine = processModoluUpperH(m["H"], formattedLine);
+            break;
+          case "an":
+            formattedLine = formattedLine.replaceAll("%an", m["an"] ?? "NULL");
+            break;
+          case "ae":
+            formattedLine = formattedLine.replaceAll("%ae", m["ae"] ?? "NULL");
+            break;
+        }
+      }
+      //lb.write(formattedLine);
+
+      sb!.writeln(formattedLine);
       lb.clear();
     }
     if (footer == null) {
@@ -261,48 +263,50 @@ class FormatCommand extends Command {
 
   void writeFileContent() {
     if (outputfile != null) {
-      File(outputfile!).writeAsString(markdown!);
+      var file = File(outputfile!);
+      if (!file.existsSync()) {
+        file.createSync();
+      }
+      file.writeAsString(markdown!);
     } else {
       print(markdown!);
     }
   }
 
-  void processModoluS(String? m, StringBuffer lb, String line) {
+  String processModoluS(String? m, String formattedLine, String line) {
     var issue = getIssue(line);
     var link = "";
     if (issue != null && issue.length > 1) {
       link = issueType == "JIRA" ? issue : issue.substring(1);
     }
     if (issue != null && addIssueLink == "REPLACE") {
-      lb.write("[$issue]($ibu$link)");
+      formattedLine = formattedLine.replaceAll("%s", "[$issue]($ibu$link)");
     } else if (issue != null && addIssueLink == "PREPEND") {
-      lb.write(" [$issue]($ibu$link) $m");
+      formattedLine = formattedLine.replaceAll("%s", " [$issue]($ibu$link) $m");
     } else if (issue != null && addIssueLink == "APPEND") {
-      lb.write("$m [$issue]($ibu$link)");
+      formattedLine = formattedLine.replaceAll("%s", "$m [$issue]($ibu$link)");
     } else {
-      lb.write(m);
+      formattedLine = formattedLine.replaceAll("%s", m ?? "NULL");
     }
+    return formattedLine;
   }
 
-  void processModoluUpperH(String? m, StringBuffer lb) {
+  String processModoluUpperH(String? m, String formattedLine) {
     switch (addCommitLink) {
       case "REPLACE":
-        lb.write("[Commit]($cbu$m)");
+        formattedLine = formattedLine.replaceAll("%H", "[Commit]($cbu$m)");
         break;
       case "PREPEND":
-        lb.write("[Commit]($cbu$m) $m");
+        formattedLine = formattedLine.replaceAll("%H", "[Commit]($cbu$m) $m");
         break;
       case "APPEND":
-        lb.write("$m [Commit]($cbu$m)");
+        formattedLine = formattedLine.replaceAll("%H", "$m [Commit]($cbu$m)");
         break;
       case "NONE":
       default:
-        lb.write(m);
+        formattedLine = formattedLine.replaceAll("%H", m ?? "NULL");
     }
-  }
-
-  void processModoluAn(String? m, StringBuffer lb) {
-    lb.write(m);
+    return formattedLine;
   }
 
   void validateArgs() {

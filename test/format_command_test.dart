@@ -57,6 +57,14 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
 - Prepare release 5.5.2 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/aa02142d28d1f162c0ffe00dd85bf16db9023d4d) by Ephenodrom
 ''';
 
+  var log4 = '''
+s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
+''';
+
+  var expected4 = '''
+- Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom
+''';
+
   test('test formatLines()', () {
     var cmd = FormatCommand();
     cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
@@ -87,5 +95,15 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
     cmd.template = "- %s %H by %an";
     var markdown = cmd.formatLines(log3.split("\n"));
     expect(markdown, expected3);
+  });
+
+  test('test formatLines() 4', () {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.template = "- %s %H by %an";
+    cmd.addIssueLink = "APPEND";
+    var markdown = cmd.formatLines(log4.split("\n"));
+    expect(markdown, expected4);
   });
 }
