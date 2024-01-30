@@ -61,7 +61,7 @@ The allowed values:
 - **%b**: Body (commit message).
 
 >>>
-The allowed values are basically the same as you can use in **git log**.
+The allowed values are basically the same as you can use in **git log** except the new line %N.
 >>>
 
 ### Pipeline example

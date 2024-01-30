@@ -114,25 +114,6 @@ class FormatCommand extends Command {
     );
   }
 
-/*%H: Commit hash (full).
-%h: Abbreviated commit hash.
-%T: Tree hash.
-%t: Abbreviated tree hash.
-%P: Parent hashes.
-%p: Abbreviated parent hashes.
-%an: Author name.
-%ae: Author email.
-%ad: Author date (default format).
-%ar: Author date, relative.
-%cn: Committer name.
-%ce: Committer email.
-%cd: Committer date (default format).
-%cr: Committer date, relative.
-%s: Subject (commit message).
-%b: Body (commit message).
-%N: Newline.
-*/
-
   @override
   void run() async {
     setUpArgs();

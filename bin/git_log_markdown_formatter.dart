@@ -12,7 +12,7 @@ void main(List<String> arguments) {
       (error) {
         if (error is GitException) {
           print(error.toString());
-          exit(64);
+          exit(1);
         } else if (error is! UsageException) {
           throw error;
         }
