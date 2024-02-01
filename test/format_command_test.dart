@@ -16,8 +16,7 @@ s=Merge branch 'feature-impl-ecdsa-pkcs8-converting';H=f2d9429a6bd955d12c2d82d48
 - Merge pull request #105 from Nikoo00o/master [#105](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/105) [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/42e43ce8cd8efbc05a604ff34c2f43f8f1846536) by Ephenodrom
 - Added the new "notBefore" parameter to the "generateSelfSignedCertificate" method to enable custom certificate validity. Also implemented a small validity test. [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/7aebce4400694508e2422a10b3caeac8718ab2a5) by Nikoo00o
 - Merge pull request #101 from romgrm/master [#101](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/101) [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/e03ba499fd3238879ca3f2f2badf7457d61b0e7f) by Ephenodrom
-- Merge branch 'feature-impl-ecdsa-pkcs8-converting' [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/f2d9429a6bd955d12c2d82d481a46547cca51ccf) by romgrm
-''';
+- Merge branch 'feature-impl-ecdsa-pkcs8-converting' [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/f2d9429a6bd955d12c2d82d481a46547cca51ccf) by romgrm''';
 
   var log2 = '''
 s=Merge branch 'develop';H=70426ddbc0eafb0d360de225f5558bca1bb404dc;an=group_1_bot_abcde
@@ -36,8 +35,7 @@ s=Merge tag '1.64.0' into develop;H=9a3370fc25c4931a7d3d1861de4546ade29a92e9;an=
 - Merge branch 'JIRA-2' into 'develop' [JIRA-2](https://jira.com/browse/JIRA-2) [Commit](https://gitlab.com/subgroup/test_maven/-/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a) by Ephenodrom
 - Update .gitlab-ci.yml [Commit](https://gitlab.com/subgroup/test_maven/-/commit/c491eb38b129b85a21e6482c8e7e7a8cdd02e03a) by Ephenodrom
 - Update for next development version [Commit](https://gitlab.com/subgroup/test_maven/-/commit/7d5cfa5a997bc9b415bb906fc6380a0118f24aed) by group_1_bot_abcde
-- Merge tag '1.64.0' into develop [Commit](https://gitlab.com/subgroup/test_maven/-/commit/9a3370fc25c4931a7d3d1861de4546ade29a92e9) by group_1_bot_abcde
-''';
+- Merge tag '1.64.0' into develop [Commit](https://gitlab.com/subgroup/test_maven/-/commit/9a3370fc25c4931a7d3d1861de4546ade29a92e9) by group_1_bot_abcde''';
 
   var log3 = '''
 H=fb4408cd36195d9097572fd198521051fd12d3cd;h=fb4408c;T=ac78827842adc11a6c8a9cfbdf69291414895046;t=ac78827;P=8b858e37b6b97bf1ec9f3d603cff9a714b5ca3c6 1efc56a4bbececbccbbcc08c7ac226bbe4d761da;p=8b858e3 1efc56a;an=Ephenodrom;ae=30625794+Ephenodrom@users.noreply.github.com;ad=Mon May 8 09:10:37 2023 +0200;ar=9 months ago;cn=GitHub;ce=noreply@github.com;cd=Mon May 8 09:10:37 2023 +0200;cr=9 months ago;s=Merge pull request #90 from arkare/master;b=Fix nextInt misuse
@@ -54,8 +52,7 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
 - Prepare release 5.5.4 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/8b858e37b6b97bf1ec9f3d603cff9a714b5ca3c6) by Ephenodrom
 - Improve checkX509Signature [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/d52e8d557f994984c23a71627dd4069e60a50a72) by Ephenodrom
 - Prepare release 5.5.3 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/8364e60d6bfa8986765d8b4e23bb7db84bed0562) by Ephenodrom
-- Prepare release 5.5.2 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/aa02142d28d1f162c0ffe00dd85bf16db9023d4d) by Ephenodrom
-''';
+- Prepare release 5.5.2 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/aa02142d28d1f162c0ffe00dd85bf16db9023d4d) by Ephenodrom''';
 
   var log4 = '''
 s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom;b=
@@ -64,8 +61,7 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
 ''';
 
   var expected4 = '''
-- Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom
-''';
+- Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom''';
 
   test('test formatLines()', () {
     var cmd = FormatCommand();
@@ -105,7 +101,6 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
     cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
     cmd.template = "- %s %H by %an";
     cmd.addIssueLink = "APPEND";
-    print(log4.split("\n"));
     var markdown = cmd.formatLines(log4.split("\n"));
     expect(markdown, expected4);
   });
@@ -122,5 +117,13 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
     cmd.authorRegex = ".*enodrom";
     markdown = cmd.formatLines(log4.split("\n"));
     expect(markdown, "");
+
+    markdown = cmd.formatLines([
+      "s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=;b="
+    ]);
+    expect(
+      markdown,
+      "- Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by NULL",
+    );
   });
 }

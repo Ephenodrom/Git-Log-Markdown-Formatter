@@ -202,20 +202,24 @@ class FormatCommand extends Command {
             break;
         }
       }
-
       sb!.writeln(formattedLine);
     }
+    var content = "";
     if (footer == null) {
-      return sb!.toString();
+      content = sb!.toString();
     } else {
       sb!.writeln();
       sb!.writeln(footer);
-      return sb!.toString();
+      content = sb!.toString();
     }
+    if (content.endsWith("\n")) {
+      content = content.substring(0, content.length - 1);
+    }
+    return content;
   }
 
-  Map<String, String> getValuesFromLine(String l) {
-    var m = <String, String>{};
+  Map<String, String?> getValuesFromLine(String l) {
+    var m = <String, String?>{};
     var splitted = l.split(";");
     for (var s in splitted) {
       if (s.contains("=")) {
@@ -223,7 +227,7 @@ class FormatCommand extends Command {
         if (kV.length == 2) {
           m.putIfAbsent(
             kV.elementAt(0),
-            () => kV.elementAt(1),
+            () => kV.elementAt(1).isEmpty ? null : kV.elementAt(1),
           );
         }
       }

@@ -10,6 +10,7 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
     - [Pipeline example](#pipeline-example)
       - [.gitlab-ci.yml](#gitlab-ciyml)
   - [Executable binary](#executable-binary)
+    - [Gitlab Example](#gitlab-example)
 
 ## How to use it
 
@@ -67,9 +68,8 @@ The allowed values:
 - **%s**: Subject (commit message).
 - **%b**: Body (commit message).
 
->>>
-The allowed values are basically the same as you can use in **git log** except the new line %N.
->>>
+> [!NOTE]
+> The allowed values are basically the same as you can use in **git log** except the new line %N.
 
 ### Pipeline example
 
@@ -98,13 +98,20 @@ generate_changelog:
     - release_notes.md
 ```
 
->>>
-The CI CD job assumes that the tag for the current release was created before this job is running and $CI_COMMIT_TAG contains the current tag you want to release.
->>>
+> [!NOTE]
+> The CI CD job assumes that the tag for the current release was created before this job is running and $CI_COMMIT_TAG contains the current tag you want to release.
 
 ## Executable binary
 
 The binary can be fetched from the latest release on Github or you can compile it yourself.
+
+```bash
+git clone https://github.com/Ephenodrom/Git-Log-Markdown-Formatter.git
+dart pub get --directory Git-Log-Markdown-Formatter
+dart compile exe Git-Log-Markdown-Formatter/bin/git_log_markdown_formatter.dart -o glmf
+```
+
+### Gitlab Example
 
 ```yaml
 stages:
