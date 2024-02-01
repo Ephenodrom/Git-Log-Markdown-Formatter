@@ -18,12 +18,13 @@ jobs:
         run: |
           dart pub get
           dart compile exe bin/git_log_markdown_formatter.dart -o glmf
+          zip glmf.zip glmf
 
       - name: Upload Executable Artifact
         uses: actions/upload-artifact@v2
         with:
           name: glmf
-          path: glmf
+          path: glmf.zip
 
       - name: Publish Release
         run: |
