@@ -30,7 +30,7 @@ jobs:
           RELEASE_VERSION=$(dart get_version.dart)
        
           gh release create $RELEASE_VERSION \
-            dist/my-binary.zip \
+            glmf \
             -t "Release $RELEASE_VERSION" \
             -n "Release $RELEASE_VERSION"
         env:
