@@ -28,10 +28,14 @@ jobs:
 
       - name: Publish Release
         run: |
-          gh release create v${{ env.PACKAGE_VERSION }} \
+          RELEASE_VERSION=$(dart get_version.dart)
+       
+          gh release create $RELEASE_VERSION \
             dist/my-binary.zip \
-            -t "Release v${{ env.PACKAGE_VERSION }}" \
-            -n "$(cat RELEASE_NOTES.md)"
+            -t "Release $RELEASE_VERSION" \
+            -n "Release $RELEASE_VERSION"
 
       - name: Create Git Tag
-        run: git tag v${{ env.PACKAGE_VERSION }} && git push origin v${{ env.PACKAGE_VERSION }}
+        run: |
+          RELEASE_VERSION=$(dart get_version.dart)
+          git tag $RELEASE_VERSION && git push origin $RELEASE_VERSION
