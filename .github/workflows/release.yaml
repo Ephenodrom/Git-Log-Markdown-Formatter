@@ -10,7 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@latest
-      - uses: actions/upload-artifact@v2
       - uses: actions/setup-gh@latest
 
       - name: Get Version from pubspec.yaml
@@ -20,6 +19,7 @@ jobs:
         run: dart compile exe bin/git_log_markdown_formatter.dart -o glmf
 
       - name: Upload Executable Artifact
+        uses: actions/upload-artifact@v2
         with:
           name: glmf
           path: glmf
