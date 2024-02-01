@@ -13,9 +13,6 @@ jobs:
 
       - name: Verify GitHub CLI installation
         run: gh --version
-
-      - name: Get Version from pubspec.yaml
-        run: echo "::set-env name=PACKAGE_VERSION::$(dart get_version.dart)"
       
       - name: Build Executable
         run: dart compile exe bin/git_log_markdown_formatter.dart -o glmf
