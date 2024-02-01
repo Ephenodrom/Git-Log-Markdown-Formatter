@@ -59,12 +59,12 @@ class FormatCommand extends Command {
       help: "The issue management software you use.",
     );
     argParser.addOption(
-      'issueBaseUrl',
+      'iBaseUrl',
       defaultsTo: null,
       help: "The base url to display the issue. Required if addIssueLink=true.",
     );
     argParser.addOption(
-      'commitBaseUrl',
+      'cBaseUrl',
       defaultsTo: null,
       mandatory: false,
       help:
@@ -217,8 +217,8 @@ class FormatCommand extends Command {
 
   void setUpArgs() {
     template = argResults!['template'] as String;
-    cbu = argResults!['commitBaseUrl'] as String?;
-    ibu = argResults!['issueBaseUrl'] as String?;
+    cbu = argResults!['cBaseUrl'] as String?;
+    ibu = argResults!['iBaseUrl'] as String?;
     addCommitLink = argResults!['addCommitLink'];
     addIssueLink = argResults!['addIssueLink'];
     issueType = argResults!['issueType'];
@@ -329,10 +329,10 @@ class FormatCommand extends Command {
 
   void validateArgs() {
     if (addCommitLink != "NONE" && cbu == null) {
-      throw UsageException("Option commitBaseUrl is required.", usage);
+      throw UsageException("Option cBaseUrl is required.", usage);
     }
     if (addIssueLink != "NONE" && ibu == null) {
-      throw UsageException("Option issueBaseUrl is required.", usage);
+      throw UsageException("Option iBaseUrl is required.", usage);
     }
   }
 }
