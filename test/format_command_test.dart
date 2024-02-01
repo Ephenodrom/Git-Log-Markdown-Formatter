@@ -58,7 +58,9 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
 ''';
 
   var log4 = '''
-s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
+s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom;b=
+
+
 ''';
 
   var expected4 = '''
@@ -103,6 +105,7 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
     cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
     cmd.template = "- %s %H by %an";
     cmd.addIssueLink = "APPEND";
+    print(log4.split("\n"));
     var markdown = cmd.formatLines(log4.split("\n"));
     expect(markdown, expected4);
   });
