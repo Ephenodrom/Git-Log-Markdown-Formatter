@@ -205,11 +205,15 @@ class FormatCommand extends Command {
     var m = <String, String>{};
     var splitted = l.split(";");
     for (var s in splitted) {
-      var kV = s.split("=");
-      m.putIfAbsent(
-        kV.elementAt(0),
-        () => kV.elementAt(1),
-      );
+      if (s.contains("=")) {
+        var kV = s.split("=");
+        if (kV.length == 2) {
+          m.putIfAbsent(
+            kV.elementAt(0),
+            () => kV.elementAt(1),
+          );
+        }
+      }
     }
 
     return m;
@@ -226,6 +230,8 @@ class FormatCommand extends Command {
     footer = argResults!['footer'];
     file = argResults!['inputfile'];
     outputfile = argResults!['outputfile'];
+    from = argResults!['from'] as String?;
+    to = argResults!['to'] as String?;
   }
 
   String? getIssue(String l) {
@@ -256,6 +262,7 @@ class FormatCommand extends Command {
     }
     var parameters = <String>[];
     parameters.add("log");
+
     if (from != null && to != null) {
       parameters.add("$from..$to");
     } else if (from != null && to == null) {
@@ -263,8 +270,9 @@ class FormatCommand extends Command {
     } else if (from == null && to != null) {
       parameters.add("..$to");
     }
+
     parameters.add(
-        '--format=H=%H;h=%h;T=%T;t=%t;P=%P;p=%p;an=%an;ae=%ae;ad=%ad;ar=%ar;cn=%cn;ce=%ce;cd=%cd;cr=%cr;s=%s;b=%b"');
+        '--format=H=%H;h=%h;T=%T;t=%t;P=%P;p=%p;an=%an;ae=%ae;ad=%ad;ar=%ar;cn=%cn;ce=%ce;cd=%cd;cr=%cr;s=%s;b=%b');
     ProcessResult result = await Process.run(
       'git',
       parameters,
