@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up Dart SDK
-      uses: dart-lang/setup-dart@v2
+      uses: dart-lang/setup-dart@latest
 
     - name: Get Version from pubspec.yaml
       run: echo "::set-env name=PACKAGE_VERSION::$(dart get_version.dart)"
@@ -27,7 +27,7 @@ jobs:
         path: glmf
 
     - name: Create Release
-      uses: actions/setup-gh@v0.7.0
+      uses: actions/setup-gh@latest
       with:
         gh-version: 2.2.0
 
