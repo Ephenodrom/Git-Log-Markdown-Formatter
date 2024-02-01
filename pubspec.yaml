@@ -1,6 +1,6 @@
 name: git_log_markdown_formatter
 description: A sample command-line application with basic argument parsing.
-version: 1.0.0
+version: 1.1.0
 # repository: https://github.com/my_org/my_repo
 
 environment:

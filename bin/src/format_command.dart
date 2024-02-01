@@ -20,6 +20,7 @@ class FormatCommand extends Command {
   String? footer;
   String? from;
   String? to;
+  String? authorRegex;
 
   @override
   String get description =>
@@ -112,6 +113,12 @@ class FormatCommand extends Command {
       defaultsTo: null,
       help: "The tag until to include commits",
     );
+    argParser.addOption(
+      'excludeAuthor',
+      defaultsTo: null,
+      help:
+          "The author to exclude. You can use * to perform a 'like' search. Example *bot*",
+    );
   }
 
   @override
@@ -133,6 +140,12 @@ class FormatCommand extends Command {
     for (var l in lines) {
       if (l.isEmpty) {
         continue;
+      }
+      if (authorRegex != null) {
+        RegExp regex = RegExp("an=($authorRegex?);");
+        if (regex.hasMatch(l)) {
+          continue;
+        }
       }
       var formattedLine = template.toString();
 
@@ -232,6 +245,11 @@ class FormatCommand extends Command {
     outputfile = argResults!['outputfile'];
     from = argResults!['from'] as String?;
     to = argResults!['to'] as String?;
+
+    var value = argResults!['excludeAuthor'] as String?;
+    if (value != null) {
+      authorRegex = value.replaceAll("*", ".*");
+    }
   }
 
   String? getIssue(String l) {

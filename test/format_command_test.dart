@@ -109,4 +109,18 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
     var markdown = cmd.formatLines(log4.split("\n"));
     expect(markdown, expected4);
   });
+
+  test('test formatLines() 5', () {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.template = "- %s %H by %an";
+    cmd.addIssueLink = "APPEND";
+    cmd.authorRegex = "Ephenodrom";
+    var markdown = cmd.formatLines(log4.split("\n"));
+    expect(markdown, "");
+    cmd.authorRegex = ".*enodrom";
+    markdown = cmd.formatLines(log4.split("\n"));
+    expect(markdown, "");
+  });
 }
