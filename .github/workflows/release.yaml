@@ -15,7 +15,9 @@ jobs:
         run: gh --version
       
       - name: Build Executable
-        run: dart compile exe bin/git_log_markdown_formatter.dart -o glmf
+        run: |
+          dart pub get
+          dart compile exe bin/git_log_markdown_formatter.dart -o glmf
 
       - name: Upload Executable Artifact
         uses: actions/upload-artifact@v2
