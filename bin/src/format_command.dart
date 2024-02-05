@@ -21,6 +21,7 @@ class FormatCommand extends Command {
   String? from;
   String? to;
   String? authorRegex;
+  String? noMerges = "false";
 
   @override
   String get description =>
@@ -118,6 +119,15 @@ class FormatCommand extends Command {
       defaultsTo: null,
       help:
           "The author to exclude. You can use * to perform a 'like' search. Example *bot*",
+    );
+    argParser.addOption(
+      'noMerges',
+      defaultsTo: "false",
+      allowed: [
+        "true",
+        "false",
+      ],
+      help: "Ignore merge requests",
     );
   }
 
@@ -249,6 +259,7 @@ class FormatCommand extends Command {
     outputfile = argResults!['outputfile'];
     from = argResults!['from'] as String?;
     to = argResults!['to'] as String?;
+    noMerges = argResults!['noMerges'] as String?;
 
     var value = argResults!['excludeAuthor'] as String?;
     if (value != null) {
@@ -291,6 +302,9 @@ class FormatCommand extends Command {
       parameters.add("$from..");
     } else if (from == null && to != null) {
       parameters.add("..$to");
+    }
+    if (noMerges == "true") {
+      parameters.add("--no-merges");
     }
 
     parameters.add(
