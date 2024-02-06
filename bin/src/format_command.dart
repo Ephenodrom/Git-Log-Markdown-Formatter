@@ -207,9 +207,6 @@ class FormatCommand extends Command {
           case "cr":
             formattedLine = formattedLine.replaceAll("%cr", m["cr"] ?? "NULL");
             break;
-          case "b":
-            formattedLine = formattedLine.replaceAll("%b", m["b"] ?? "NULL");
-            break;
         }
       }
       sb!.writeln(formattedLine);
@@ -308,7 +305,7 @@ class FormatCommand extends Command {
     }
 
     parameters.add(
-        '--format=H=%H;h=%h;T=%T;t=%t;P=%P;p=%p;an=%an;ae=%ae;ad=%ad;ar=%ar;cn=%cn;ce=%ce;cd=%cd;cr=%cr;s=%s;b=%b');
+        '--format="H=%H;h=%h;T=%T;t=%t;P=%P;p=%p;an=%an;ae=%ae;ad=%ad;ar=%ar;cn=%cn;ce=%ce;cd=%cd;cr=%cr;s=%s"');
     ProcessResult result = await Process.run(
       'git',
       parameters,

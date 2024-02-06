@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0
+
+- Remove %b in format.
+
 ## 1.2.0
 
 - Add new parameter "noMerges"

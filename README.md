@@ -67,7 +67,6 @@ The allowed values:
 - **%cd**: Committer date (default format).
 - **%cr**: Committer date, relative.
 - **%s**: Subject (commit message).
-- **%b**: Body (commit message).
 
 > [!NOTE]
 > The allowed values are basically the same as you can use in **git log** except the new line %N.
