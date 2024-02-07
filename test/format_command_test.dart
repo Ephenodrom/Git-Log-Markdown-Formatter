@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:args/command_runner.dart';
 import 'package:test/test.dart';
 
 import '../bin/src/format_command.dart';
@@ -64,16 +67,19 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
 - Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom''';
 
   var log5 = '''
-H=f8a1e620360ca63bc0394bf4ad1da048202414b0;h=f8a1e620;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=381199afb48e88d4d910ae1ac696b6a3dd1b6c88 bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;p=381199af bb52d4b4;an=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Merge branch 'develop';b=
-H=bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;h=bb52d4b4;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=fed4dbc2de6f96fa6fb8614aca18d173e77efdea;p=fed4dbc2;an=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Update versions for release;b=
-H=8dc94f9c56f4459e6be99b44e61831690d55b17f;h=8dc94f9c;T=08d5a5d01ad5ee96335952b78e97e8776fd2d700;t=08d5a5d0;P=6c10904dffddf1db78711bf2aa91a448ece939ee;p=6c10904d;an=surattanabopp;ae=surattana.bopp@internetx.com;ad=Mon Jan 29 19:18:55 2024 +0100;ar=8 days ago;cn=surattanabopp;ce=surattana.bopp@internetx.com;cd=Mon Jan 29 19:18:55 2024 +0100;cr=8 days ago;s=SSLM-1369 Fix Null Pointer Exception;b=
-H=6c10904dffddf1db78711bf2aa91a448ece939ee;h=6c10904d;T=c8c44a9e36cf5c10d142fe481add1c79599e7773;t=c8c44a9e;P=aacd6f9925ad245f9fd07d0cf764253d517ba752;p=aacd6f99;an=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;ad=Tue Jan 23 14:52:27 2024 +0000;ar=2 weeks ago;cn=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;cd=Tue Jan 23 14:52:27 2024 +0000;cr=2 weeks ago;s=Update for next development version;b=
-H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43476c27f7a9f0d4ad;t=3a0dc693;P=d67d1af73ecb49b16dc557dcd2732a56c104c8cd 381199afb48e88d4d910ae1ac696b6a3dd1b6c88;p=d67d1af7 381199af;an=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;ad=Tue Jan 23 14:52:24 2024 +0000;ar=2 weeks ago;cn=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group_103_bot_b3bc1c614c59f2a273ddb49272a686f0@gitlab.muc.internetx.com;cd=Tue Jan 23 14:52:24 2024 +0000;cr=2 weeks ago;s=Merge tag '4.15.0' into develop;b=Tag release
+H=f8a1e620360ca63bc0394bf4ad1da048202414b0;h=f8a1e620;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=381199afb48e88d4d910ae1ac696b6a3dd1b6c88 bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;p=381199af bb52d4b4;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Merge branch 'develop';b=
+H=bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;h=bb52d4b4;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=fed4dbc2de6f96fa6fb8614aca18d173e77efdea;p=fed4dbc2;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Update versions for release;b=
+H=6c10904dffddf1db78711bf2aa91a448ece939ee;h=6c10904d;T=c8c44a9e36cf5c10d142fe481add1c79599e7773;t=c8c44a9e;P=aacd6f9925ad245f9fd07d0cf764253d517ba752;p=aacd6f99;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Jan 23 14:52:27 2024 +0000;ar=2 weeks ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Jan 23 14:52:27 2024 +0000;cr=2 weeks ago;s=Update for next development version;b=
+H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43476c27f7a9f0d4ad;t=3a0dc693;P=d67d1af73ecb49b16dc557dcd2732a56c104c8cd 381199afb48e88d4d910ae1ac696b6a3dd1b6c88;p=d67d1af7 381199af;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Jan 23 14:52:24 2024 +0000;ar=2 weeks ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Jan 23 14:52:24 2024 +0000;cr=2 weeks ago;s=Merge tag '4.15.0' into develop;b=Tag release
 ''';
 
   var expected5 = '''
 - Merge branch 'JIRA-2' into 'develop' [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a) by Ephenodrom
 - Update .gitlab-ci.yml [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/c491eb38b129b85a21e6482c8e7e7a8cdd02e03a) by Ephenodrom''';
+
+  var expected6 = '''
+- Prepare release 1.3.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/057591671b2480912eb8813e4cc1800a7b9159e9) by Ephenodrom
+- Prepare release 1.2.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/5487684ade026e08cebef020d13e29750c470fd6) by Ephenodrom''';
 
   test('test formatLines()', () {
     var cmd = FormatCommand();
@@ -148,5 +154,25 @@ H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43
     cmd.authorRegex = ".*bot.*";
     var markdown = cmd.formatLines(log5.split("\n"));
     expect(markdown, expected5);
+  });
+
+  test('test formatLines() 7', () async {
+    var args = <String>[
+      "format",
+      "-otest_resources/test_notes.md",
+      "--iBaseUrl=https://github.com/Ephenodrom/Dart-Basic-Utils/issues/",
+      "--cBaseUrl=https://github.com/Ephenodrom/Dart-Basic-Utils/commit/",
+      '--from=1.1.0',
+      '--to=1.3.0',
+    ];
+
+    var runner = CommandRunner("glmf", "A simple git log to markdown formatter")
+      ..addCommand(FormatCommand());
+    await runner.run(args);
+    await Future.delayed(Duration(seconds: 1));
+    var testNotes = File("test_resources/test_notes.md");
+    var content = testNotes.readAsStringSync();
+    expect(expected6, content);
+    testNotes.deleteSync();
   });
 }

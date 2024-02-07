@@ -17,6 +17,7 @@ jobs:
       - name: Build Executable
         run: |
           dart pub get
+          dart update_meta.dart
           dart compile exe bin/git_log_markdown_formatter.dart -o glmf
           zip glmf.zip glmf
 

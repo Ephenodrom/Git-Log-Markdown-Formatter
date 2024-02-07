@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.0
+
+- Minor code improvements
+- Added unit tests
+- Add new command to display the version
+
 ## 1.3.0
 
 - Remove %b in format.

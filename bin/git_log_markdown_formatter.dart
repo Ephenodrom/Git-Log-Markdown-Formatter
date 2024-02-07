@@ -4,10 +4,12 @@ import 'package:args/command_runner.dart';
 
 import 'src/exception/git_exception.dart';
 import 'src/format_command.dart';
+import 'src/version.dart';
 
 void main(List<String> arguments) {
   CommandRunner("glmf", "A simple git log to markdown formatter")
     ..addCommand(FormatCommand())
+    ..addCommand(VersionCommand())
     ..run(arguments).catchError(
       (error) {
         if (error is GitException) {
