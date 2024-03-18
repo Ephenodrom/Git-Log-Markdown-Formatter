@@ -108,6 +108,7 @@ The binary can be fetched from the latest release on Github or you can compile i
 ```bash
 git clone https://github.com/Ephenodrom/Git-Log-Markdown-Formatter.git
 dart pub get --directory Git-Log-Markdown-Formatter
+dart Git-Log-Markdown-Formatter/update_meta.dart
 dart compile exe Git-Log-Markdown-Formatter/bin/git_log_markdown_formatter.dart -o glmf
 ```
 
@@ -122,6 +123,7 @@ build:
   script: 
     - git clone https://github.com/Ephenodrom/Git-Log-Markdown-Formatter.git
     - dart pub get --directory Git-Log-Markdown-Formatter
+    - dart Git-Log-Markdown-Formatter/update_meta.dart
     - dart compile exe Git-Log-Markdown-Formatter/bin/git_log_markdown_formatter.dart -o glmf
   artifacts:
     paths:
