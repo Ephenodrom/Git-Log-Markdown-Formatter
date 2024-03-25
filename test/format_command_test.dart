@@ -22,12 +22,12 @@ s=Merge branch 'feature-impl-ecdsa-pkcs8-converting';H=f2d9429a6bd955d12c2d82d48
 - Merge branch 'feature-impl-ecdsa-pkcs8-converting' [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/f2d9429a6bd955d12c2d82d481a46547cca51ccf) by romgrm''';
 
   var log2 = '''
-s=Merge branch 'develop';H=70426ddbc0eafb0d360de225f5558bca1bb404dc;an=group_1_bot_abcde
-s=Update versions for release;H=cac4d0a7c2ac58c841c249fa8e1fdb4295eee6ed;an=group_1_bot_abcde
-s=Merge branch 'JIRA-2' into 'develop';H=aa1114f4d27a049ac4e01fa78402eee965a1528a;an=Ephenodrom
-s=Update .gitlab-ci.yml;H=c491eb38b129b85a21e6482c8e7e7a8cdd02e03a;an=Ephenodrom
-s=Update for next development version;H=7d5cfa5a997bc9b415bb906fc6380a0118f24aed;an=group_1_bot_abcde
-s=Merge tag '1.64.0' into develop;H=9a3370fc25c4931a7d3d1861de4546ade29a92e9;an=group_1_bot_abcde
+s=Merge branch 'develop';H=70426ddbc0eafb0d360de225f5558bca1bb404dc;an=group_1_bot_abcde;
+s=Update versions for release;H=cac4d0a7c2ac58c841c249fa8e1fdb4295eee6ed;an=group_1_bot_abcde;
+s=Merge branch 'JIRA-2' into 'develop';H=aa1114f4d27a049ac4e01fa78402eee965a1528a;an=Ephenodrom;
+s=Update .gitlab-ci.yml;H=c491eb38b129b85a21e6482c8e7e7a8cdd02e03a;an=Ephenodrom;
+s=Update for next development version;H=7d5cfa5a997bc9b415bb906fc6380a0118f24aed;an=group_1_bot_abcde;
+s=Merge tag '1.64.0' into develop;H=9a3370fc25c4931a7d3d1861de4546ade29a92e9;an=group_1_bot_abcde;
 ''';
 
   var expected2 = '''
@@ -66,13 +66,6 @@ s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
   var expected4 = '''
 - Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom''';
 
-  var log5 = '''
-H=f8a1e620360ca63bc0394bf4ad1da048202414b0;h=f8a1e620;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=381199afb48e88d4d910ae1ac696b6a3dd1b6c88 bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;p=381199af bb52d4b4;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Merge branch 'develop';b=
-H=bb52d4b4b08e3d8b1e4b9874b002e194ec9fb2fe;h=bb52d4b4;T=de9b19f895ce53c3937e4af6466402732f1db798;t=de9b19f8;P=fed4dbc2de6f96fa6fb8614aca18d173e77efdea;p=fed4dbc2;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Feb 6 10:12:27 2024 +0000;ar=32 minutes ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Feb 6 10:12:27 2024 +0000;cr=32 minutes ago;s=Update versions for release;b=
-H=6c10904dffddf1db78711bf2aa91a448ece939ee;h=6c10904d;T=c8c44a9e36cf5c10d142fe481add1c79599e7773;t=c8c44a9e;P=aacd6f9925ad245f9fd07d0cf764253d517ba752;p=aacd6f99;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Jan 23 14:52:27 2024 +0000;ar=2 weeks ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Jan 23 14:52:27 2024 +0000;cr=2 weeks ago;s=Update for next development version;b=
-H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43476c27f7a9f0d4ad;t=3a0dc693;P=d67d1af73ecb49b16dc557dcd2732a56c104c8cd 381199afb48e88d4d910ae1ac696b6a3dd1b6c88;p=d67d1af7 381199af;an=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ae=group__bot_;ad=Tue Jan 23 14:52:24 2024 +0000;ar=2 weeks ago;cn=group__bot_b3bc1c614c59f2a273ddb49272a686f0;ce=group__bot_;cd=Tue Jan 23 14:52:24 2024 +0000;cr=2 weeks ago;s=Merge tag '4.15.0' into develop;b=Tag release
-''';
-
   var expected5 = '''
 - Merge branch 'JIRA-2' into 'develop' [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a) by Ephenodrom
 - Update .gitlab-ci.yml [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/c491eb38b129b85a21e6482c8e7e7a8cdd02e03a) by Ephenodrom''';
@@ -80,6 +73,20 @@ H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43
   var expected6 = '''
 - Prepare release 1.3.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/057591671b2480912eb8813e4cc1800a7b9159e9) by Ephenodrom
 - Prepare release 1.2.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/5487684ade026e08cebef020d13e29750c470fd6) by Ephenodrom''';
+
+  var log8 = '''
+s=Prepare release 5.7.0;H=6a5034927857a08f3bdf5a177529e361179f6dab;an=Ephenodrom
+s=JIRA-1234;H=e03ba499fd3238879ca3f2f2badf7457d61b0e7f;an=Ephenodrom
+s=JIRA-1234;H=f2d9429a6bd955d12c2d82d481a46547cca51ccf;an=romgrm
+s=JIRA-1234: Fix Unit Test;H=e03ba499fd3238879ca3f2f2badf7457d61b0e7f;an=Ephenodrom
+s=JIRA-1234: Fix Typo;H=f2d9429a6bd955d12c2d82d481a46547cca51ccf;an=romgrm
+''';
+
+  var expected8 = '''
+- Prepare release 5.7.0 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab) by Ephenodrom
+- JIRA-1234 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/e03ba499fd3238879ca3f2f2badf7457d61b0e7f) by Ephenodrom
+- JIRA-1234: Fix Unit Test [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/e03ba499fd3238879ca3f2f2badf7457d61b0e7f) by Ephenodrom
+- JIRA-1234: Fix Typo [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/f2d9429a6bd955d12c2d82d481a46547cca51ccf) by romgrm''';
 
   test('test formatLines()', () {
     var cmd = FormatCommand();
@@ -152,7 +159,7 @@ H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43
     cmd.template = "- %s %H by %an";
     cmd.addIssueLink = "APPEND";
     cmd.authorRegex = ".*bot.*";
-    var markdown = cmd.formatLines(log5.split("\n"));
+    var markdown = cmd.formatLines(log2.split("\n"));
     expect(markdown, expected5);
   });
 
@@ -174,5 +181,16 @@ H=aacd6f9925ad245f9fd07d0cf764253d517ba752;h=aacd6f99;T=3a0dc6937a412026b645ed43
     var content = testNotes.readAsStringSync();
     expect(expected6, content);
     testNotes.deleteSync();
+  });
+
+  test('test formatLines() 8 remove duplicates', () async {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.template = "- %s %H by %an";
+    cmd.addIssueLink = "APPEND";
+    cmd.filterDuplicates = true;
+    var markdown = cmd.formatLines(log8.split("\n"));
+    expect(markdown, expected8);
   });
 }

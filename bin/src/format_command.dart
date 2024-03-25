@@ -22,6 +22,7 @@ class FormatCommand extends Command {
   String? to;
   String? authorRegex;
   String? noMerges = "false";
+  bool filterDuplicates = false;
 
   @override
   String get description =>
@@ -129,6 +130,15 @@ class FormatCommand extends Command {
       ],
       help: "Ignore merge requests",
     );
+    argParser.addOption(
+      'filterDuplicates',
+      defaultsTo: "false",
+      allowed: [
+        "true",
+        "false",
+      ],
+      help: "Remove entries with already existing commit messages",
+    );
   }
 
   @override
@@ -142,6 +152,7 @@ class FormatCommand extends Command {
   }
 
   String formatLines(List<String> lines) {
+    var alreadyAddedSubjects = <String>[];
     sb = StringBuffer();
     if (header != null) {
       sb!.writeln(header);
@@ -160,6 +171,14 @@ class FormatCommand extends Command {
       var formattedLine = template.toString();
 
       var m = getValuesFromLine(l);
+      if (m["s"] != null) {
+        if (filterDuplicates && alreadyAddedSubjects.contains(m["s"])) {
+          continue;
+        } else {
+          alreadyAddedSubjects.add(m["s"]!);
+        }
+      }
+
       for (var s in m.keys) {
         switch (s) {
           case "s":
@@ -257,6 +276,8 @@ class FormatCommand extends Command {
     from = argResults!['from'] as String?;
     to = argResults!['to'] as String?;
     noMerges = argResults!['noMerges'] as String?;
+    filterDuplicates =
+        bool.tryParse(argResults!['filterDuplicates'] as String) ?? false;
 
     var value = argResults!['excludeAuthor'] as String?;
     if (value != null) {

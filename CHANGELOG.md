@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.0
+
+- Add new parameter "--filterDuplicates" (#1)
+
 ## 1.4.0
 
 - Minor code improvements

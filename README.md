@@ -40,6 +40,7 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
 | --footer| String to append at the end of the markdown. |  |  |
 | --excludeAuthor| The author to exclude. You can use * to perform a 'like' search. |  |  |
 | --noMerges| Ignore merge requests | true, false (default) |  |
+| --filterDuplicates| Filter entries with already existing commit messages | true, false (default) |  |
 
 ### The template
 
