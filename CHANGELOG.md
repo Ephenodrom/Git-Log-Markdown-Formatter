@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.0
+
+- Fix REPLACE value for addIssueLink parameter
+- Add new value REPLACE_ALL for addIssueLink parameter
+
 ## 1.5.0
 
 - Add new parameter "--filterDuplicates" (#1)

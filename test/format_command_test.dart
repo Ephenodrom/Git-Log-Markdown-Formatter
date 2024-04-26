@@ -193,4 +193,21 @@ s=JIRA-1234: Fix Typo;H=f2d9429a6bd955d12c2d82d481a46547cca51ccf;an=romgrm
     var markdown = cmd.formatLines(log8.split("\n"));
     expect(markdown, expected8);
   });
+
+  test('test processModuluS', () async {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.issueType = "JIRA";
+    cmd.template = "- %s";
+    cmd.addIssueLink = "REPLACE";
+    var line =
+        "s=JIRA-1234 - Fixing some stuff;H=e03ba499fd3238879ca3f2f2badf7457d61b0e7f;an=Ephenodrom";
+    var template = "- %s";
+    var m = "JIRA-1234 - Fixing some stuff";
+
+    var result = cmd.processModoluS(m, template, line);
+    expect(result,
+        "- [JIRA-1234](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/JIRA-1234) - Fixing some stuff");
+  });
 }

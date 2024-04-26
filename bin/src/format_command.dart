@@ -81,6 +81,7 @@ class FormatCommand extends Command {
         "REPLACE",
         "PREPEND",
         "APPEND",
+        "REPLACE_ALL",
       ],
       help: "To add a issue link at the end of the subject (%s).",
     );
@@ -355,17 +356,21 @@ class FormatCommand extends Command {
   String processModoluS(String? m, String formattedLine, String line) {
     var issue = getIssue(line);
     var link = "";
+    m ??= "NULL";
     if (issue != null && issue.length > 1) {
       link = issueType == "JIRA" ? issue : issue.substring(1);
     }
     if (issue != null && addIssueLink == "REPLACE") {
+      var tmp = m.replaceAll(issue, "[$issue]($ibu$link)");
+      formattedLine = formattedLine.replaceAll("%s", tmp);
+    } else if (issue != null && addIssueLink == "REPLACE_ALL") {
       formattedLine = formattedLine.replaceAll("%s", "[$issue]($ibu$link)");
     } else if (issue != null && addIssueLink == "PREPEND") {
       formattedLine = formattedLine.replaceAll("%s", " [$issue]($ibu$link) $m");
     } else if (issue != null && addIssueLink == "APPEND") {
       formattedLine = formattedLine.replaceAll("%s", "$m [$issue]($ibu$link)");
     } else {
-      formattedLine = formattedLine.replaceAll("%s", m ?? "NULL");
+      formattedLine = formattedLine.replaceAll("%s", m);
     }
     return formattedLine;
   }

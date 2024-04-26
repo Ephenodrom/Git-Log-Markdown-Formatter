@@ -6,6 +6,7 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
   - [How to use it](#how-to-use-it)
     - [Example](#example)
     - [Parameters](#parameters)
+      - [Additional Description](#additional-description)
     - [The template](#the-template)
     - [Pipeline example](#pipeline-example)
       - [.gitlab-ci.yml](#gitlab-ciyml)
@@ -34,13 +35,25 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
 | --issueType | The issue management software you use. | JIRA (default), GITHUB, GITLAB |  |
 | --iBaseUrl | The base url to display the issue. |  | Required if addIssueLink != NONE |
 | --cBaseUrl | The base url to display the commit. |  | Required if addCommitLink != NONE |
-| --addIssueLink  | Whether to add a issue link within the subject (%s) if one is found. | NONE, REPLACE (default), PREPEND, APPEND |  |
+| --addIssueLink  | Whether to add a issue link within the subject (%s) if one is found. | NONE, REPLACE (default), REPLACE_ALL, PREPEND, APPEND |  |
 | --addCommitLink | Whether to add a commit link to the hash (%H) or replace it. | NONE, REPLACE (default), PREPEND, APPEND |  |
 | --header | String to append at the beginning of the markdown. |  |  |
 | --footer| String to append at the end of the markdown. |  |  |
 | --excludeAuthor| The author to exclude. You can use * to perform a 'like' search. |  |  |
 | --noMerges| Ignore merge requests | true, false (default) |  |
 | --filterDuplicates| Filter entries with already existing commit messages | true, false (default) |  |
+
+#### Additional Description
+
+**addIssueLink**:
+
+Assuming you have the following commit message as the subject "JIRA-1234 - Fixing some stuff" and the following template "- %s".
+
+- NONE "- JIRA-1234 - Fixing some stuff"
+- REPLACE (default): "- [JIRA-1234](https://link.to.my.jira/JIRA-1234) - Fixing some stuff"
+- REPLACE_ALL: "- [JIRA-1234](https://link.to.my.jira/JIRA-1234)"
+- PREPEND: "- [JIRA-1234](https://link.to.my.jira/JIRA-1234) JIRA-1234 - Fixing some stuff"
+- APPEND: "- JIRA-1234 - Fixing some stuff [JIRA-1234](https://link.to.my.jira/JIRA-1234)"
 
 ### The template
 
