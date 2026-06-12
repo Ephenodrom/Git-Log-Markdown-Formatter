@@ -16,6 +16,7 @@ class FormatCommand extends Command {
   String? ibu;
   String addIssueLink = "REPLACE";
   String addCommitLink = "REPLACE";
+  String outputFormat = "MARKDOWN";
   String? header;
   String? footer;
   String? from;
@@ -139,6 +140,15 @@ class FormatCommand extends Command {
         "false",
       ],
       help: "Remove entries with already existing commit messages",
+    );
+    argParser.addOption(
+      'outputFormat',
+      defaultsTo: "MARKDOWN",
+      allowed: [
+        "MARKDOWN",
+        "GOOGLE_CHAT",
+      ],
+      help: "The output format to use for links and formatting.",
     );
   }
 
@@ -284,6 +294,7 @@ class FormatCommand extends Command {
     if (value != null) {
       authorRegex = value.replaceAll("*", ".*");
     }
+    outputFormat = argResults!['outputFormat'] as String;
   }
 
   String? getIssue(String l) {
@@ -353,6 +364,13 @@ class FormatCommand extends Command {
     }
   }
 
+  String buildLink(String text, String url) {
+    if (outputFormat == "GOOGLE_CHAT") {
+      return "<$url|$text>";
+    }
+    return "[$text]($url)";
+  }
+
   String processModoluS(String? m, String formattedLine, String line) {
     var issue = getIssue(line);
     var link = "";
@@ -361,14 +379,17 @@ class FormatCommand extends Command {
       link = issueType == "JIRA" ? issue : issue.substring(1);
     }
     if (issue != null && addIssueLink == "REPLACE") {
-      var tmp = m.replaceAll(issue, "[$issue]($ibu$link)");
+      var tmp = m.replaceAll(issue, buildLink(issue, "$ibu$link"));
       formattedLine = formattedLine.replaceAll("%s", tmp);
     } else if (issue != null && addIssueLink == "REPLACE_ALL") {
-      formattedLine = formattedLine.replaceAll("%s", "[$issue]($ibu$link)");
+      formattedLine =
+          formattedLine.replaceAll("%s", buildLink(issue, "$ibu$link"));
     } else if (issue != null && addIssueLink == "PREPEND") {
-      formattedLine = formattedLine.replaceAll("%s", " [$issue]($ibu$link) $m");
+      formattedLine = formattedLine.replaceAll(
+          "%s", " ${buildLink(issue, "$ibu$link")} $m");
     } else if (issue != null && addIssueLink == "APPEND") {
-      formattedLine = formattedLine.replaceAll("%s", "$m [$issue]($ibu$link)");
+      formattedLine = formattedLine.replaceAll(
+          "%s", "$m ${buildLink(issue, "$ibu$link")}");
     } else {
       formattedLine = formattedLine.replaceAll("%s", m);
     }
@@ -379,13 +400,16 @@ class FormatCommand extends Command {
       {String value = "%H"}) {
     switch (addCommitLink) {
       case "REPLACE":
-        formattedLine = formattedLine.replaceAll(value, "[Commit]($cbu$m)");
+        formattedLine =
+            formattedLine.replaceAll(value, buildLink("Commit", "$cbu$m"));
         break;
       case "PREPEND":
-        formattedLine = formattedLine.replaceAll(value, "[Commit]($cbu$m) $m");
+        formattedLine = formattedLine.replaceAll(
+            value, "${buildLink("Commit", "$cbu$m")} $m");
         break;
       case "APPEND":
-        formattedLine = formattedLine.replaceAll(value, "$m [Commit]($cbu$m)");
+        formattedLine = formattedLine.replaceAll(
+            value, "$m ${buildLink("Commit", "$cbu$m")}");
         break;
       case "NONE":
       default:

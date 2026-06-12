@@ -50,7 +50,7 @@ H=aa02142d28d1f162c0ffe00dd85bf16db9023d4d;h=aa02142;T=c08405c7eba3b3106b247b496
 ''';
 
   var expected3 = '''
-- [#90](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/90) [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/fb4408cd36195d9097572fd198521051fd12d3cd) by Ephenodrom
+- Merge pull request [#90](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/90) from arkare/master [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/fb4408cd36195d9097572fd198521051fd12d3cd) by Ephenodrom
 - [#89](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/89) [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/1efc56a4bbececbccbbcc08c7ac226bbe4d761da) by arkare
 - Prepare release 5.5.4 [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/8b858e37b6b97bf1ec9f3d603cff9a714b5ca3c6) by Ephenodrom
 - Improve checkX509Signature [Commit](https://github.com/Ephenodrom/Dart-Basic-Utils/commit/d52e8d557f994984c23a71627dd4069e60a50a72) by Ephenodrom
@@ -209,5 +209,79 @@ s=JIRA-1234: Fix Typo;H=f2d9429a6bd955d12c2d82d481a46547cca51ccf;an=romgrm
     var result = cmd.processModoluS(m, template, line);
     expect(result,
         "- [JIRA-1234](https://github.com/Ephenodrom/Dart-Basic-Utils/issues/JIRA-1234) - Fixing some stuff");
+  });
+
+  // Google Chat output format tests
+
+  var expectedGoogleChat1 = '''
+- Prepare release 5.7.0 <https://github.com/Ephenodrom/Dart-Basic-Utils/commit/6a5034927857a08f3bdf5a177529e361179f6dab|Commit> by Ephenodrom
+- Merge pull request #105 from Nikoo00o/master <https://github.com/Ephenodrom/Dart-Basic-Utils/issues/105|#105> <https://github.com/Ephenodrom/Dart-Basic-Utils/commit/42e43ce8cd8efbc05a604ff34c2f43f8f1846536|Commit> by Ephenodrom
+- Added the new "notBefore" parameter to the "generateSelfSignedCertificate" method to enable custom certificate validity. Also implemented a small validity test. <https://github.com/Ephenodrom/Dart-Basic-Utils/commit/7aebce4400694508e2422a10b3caeac8718ab2a5|Commit> by Nikoo00o
+- Merge pull request #101 from romgrm/master <https://github.com/Ephenodrom/Dart-Basic-Utils/issues/101|#101> <https://github.com/Ephenodrom/Dart-Basic-Utils/commit/e03ba499fd3238879ca3f2f2badf7457d61b0e7f|Commit> by Ephenodrom
+- Merge branch 'feature-impl-ecdsa-pkcs8-converting' <https://github.com/Ephenodrom/Dart-Basic-Utils/commit/f2d9429a6bd955d12c2d82d481a46547cca51ccf|Commit> by romgrm''';
+
+  test('test formatLines() Google Chat format', () {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.template = "- %s %H by %an";
+    cmd.addIssueLink = "APPEND";
+    cmd.outputFormat = "GOOGLE_CHAT";
+    var markdown = cmd.formatLines(log1.split("\n"));
+    expect(markdown, expectedGoogleChat1);
+  });
+
+  test('test formatLines() Google Chat format with JIRA and header', () {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://gitlab.com/subgroup/test_maven/-/commit/";
+    cmd.ibu = "https://jira.com/browse/";
+    cmd.issueType = "JIRA";
+    cmd.addIssueLink = "APPEND";
+    cmd.template = "- %s %H by %an";
+    cmd.header = "# Release test_maven (1.0.0)";
+    cmd.outputFormat = "GOOGLE_CHAT";
+    var markdown = cmd.formatLines(log2.split("\n"));
+
+    var expectedGoogleChat2 = '''
+# Release test_maven (1.0.0)
+
+- Merge branch 'develop' <https://gitlab.com/subgroup/test_maven/-/commit/70426ddbc0eafb0d360de225f5558bca1bb404dc|Commit> by group_1_bot_abcde
+- Update versions for release <https://gitlab.com/subgroup/test_maven/-/commit/cac4d0a7c2ac58c841c249fa8e1fdb4295eee6ed|Commit> by group_1_bot_abcde
+- Merge branch 'JIRA-2' into 'develop' <https://jira.com/browse/JIRA-2|JIRA-2> <https://gitlab.com/subgroup/test_maven/-/commit/aa1114f4d27a049ac4e01fa78402eee965a1528a|Commit> by Ephenodrom
+- Update .gitlab-ci.yml <https://gitlab.com/subgroup/test_maven/-/commit/c491eb38b129b85a21e6482c8e7e7a8cdd02e03a|Commit> by Ephenodrom
+- Update for next development version <https://gitlab.com/subgroup/test_maven/-/commit/7d5cfa5a997bc9b415bb906fc6380a0118f24aed|Commit> by group_1_bot_abcde
+- Merge tag '1.64.0' into develop <https://gitlab.com/subgroup/test_maven/-/commit/9a3370fc25c4931a7d3d1861de4546ade29a92e9|Commit> by group_1_bot_abcde''';
+
+    expect(markdown, expectedGoogleChat2);
+  });
+
+  test('test processModuluS Google Chat format', () {
+    var cmd = FormatCommand();
+    cmd.cbu = "https://github.com/Ephenodrom/Dart-Basic-Utils/commit/";
+    cmd.ibu = "https://github.com/Ephenodrom/Dart-Basic-Utils/issues/";
+    cmd.issueType = "JIRA";
+    cmd.template = "- %s";
+    cmd.addIssueLink = "REPLACE";
+    cmd.outputFormat = "GOOGLE_CHAT";
+    var line =
+        "s=JIRA-1234 - Fixing some stuff;H=e03ba499fd3238879ca3f2f2badf7457d61b0e7f;an=Ephenodrom";
+    var template = "- %s";
+    var m = "JIRA-1234 - Fixing some stuff";
+
+    var result = cmd.processModoluS(m, template, line);
+    expect(result,
+        "- <https://github.com/Ephenodrom/Dart-Basic-Utils/issues/JIRA-1234|JIRA-1234> - Fixing some stuff");
+  });
+
+  test('test buildLink() MARKDOWN format', () {
+    var cmd = FormatCommand();
+    cmd.outputFormat = "MARKDOWN";
+    expect(cmd.buildLink("text", "https://example.com"), "[text](https://example.com)");
+  });
+
+  test('test buildLink() GOOGLE_CHAT format', () {
+    var cmd = FormatCommand();
+    cmd.outputFormat = "GOOGLE_CHAT";
+    expect(cmd.buildLink("text", "https://example.com"), "<https://example.com|text>");
   });
 }

@@ -42,6 +42,7 @@ Git Log Markdown Formater is a command line tool to convert a git log one line o
 | --excludeAuthor| The author to exclude. You can use * to perform a 'like' search. |  |  |
 | --noMerges| Ignore merge requests | true, false (default) |  |
 | --filterDuplicates| Filter entries with already existing commit messages | true, false (default) |  |
+| --outputFormat| The output format to use for links and formatting. | MARKDOWN (default), GOOGLE_CHAT |  |
 
 #### Additional Description
 
@@ -54,6 +55,22 @@ Assuming you have the following commit message as the subject "JIRA-1234 - Fixin
 - REPLACE_ALL: "- [JIRA-1234](https://link.to.my.jira/JIRA-1234)"
 - PREPEND: "- [JIRA-1234](https://link.to.my.jira/JIRA-1234) JIRA-1234 - Fixing some stuff"
 - APPEND: "- JIRA-1234 - Fixing some stuff [JIRA-1234](https://link.to.my.jira/JIRA-1234)"
+
+#### Output Format
+
+The `--outputFormat` parameter controls how links are rendered in the output.
+
+- **MARKDOWN** (default): Links are rendered in standard Markdown syntax.
+
+  ```txt
+  - [JIRA-2](https://jira.com/JIRA-2) [Commit](https://github.com/Foo/Bar/commit/aa1114f) by Ephenodrom
+  ```
+
+- **GOOGLE_CHAT**: Links are rendered in Google Chat message card syntax (`<url|text>`).
+
+  ```txt
+  - <https://jira.com/JIRA-2|JIRA-2> <https://github.com/Foo/Bar/commit/aa1114f|Commit> by Ephenodrom
+  ```
 
 ### The template
 
